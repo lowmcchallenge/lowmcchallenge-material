@@ -42,7 +42,7 @@ plaintext = [1] * int(math.ceil(n / 2.0)) + [0] * int(math.floor(n / 2.0))
 key = [0] * int(math.ceil(n / 2.0)) + [1] * int(math.floor(n / 2.0))
 original_key = key
 
-state = plaintext
+state = plaintext[:]
 # Initial key addition
 state = addition(state, key)
 
