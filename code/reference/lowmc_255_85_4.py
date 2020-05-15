@@ -14,7 +14,7 @@ for _ in range(0, num_rounds):
     round_constants.append([next(gen) for _ in range(n)])
 
 round_key_matrices = []
-for _ in range(0, num_rounds):
+for _ in range(0, num_rounds + 1):
     round_key_matrices.append(generate_matrices.instantiate_matrix(n, n, gen))
 
 def addition(state, operand):
@@ -44,6 +44,7 @@ original_key = key
 
 state = plaintext[:]
 # Initial key addition
+key = matrix_mul(key, round_key_matrices[0])
 state = addition(state, key)
 
 for r in range(0, num_rounds):
@@ -57,7 +58,7 @@ for r in range(0, num_rounds):
     state = addition(state, round_constants[r])
 
     # New round key, add to state
-    key = matrix_mul(key, round_key_matrices[r])
+    key = matrix_mul(key, round_key_matrices[r+1])
     state = addition(state, key)
 
 ciphertext = state
